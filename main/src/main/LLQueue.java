@@ -1,9 +1,10 @@
-package main;/*
+package main;
+
+/*
  * This class implements a queue with linked list
  * Author: Meng Yang
  * Date: Fall 2018
  */
-
 public class LLQueue {
     // This is an inner class specifically utilized for LLStack class,
     // thus no setter or getters are needed
@@ -13,49 +14,76 @@ public class LLQueue {
 
         // Constructor with no parameters for inner class
         public Node() {
-           
+
         }
 
         // Parametrized constructor for inner class
         public Node(Object d, Node n) {
-            data = d; //shallow copy on purpose for ADTs
+            data = d; // shallow copy on purpose for ADTs
             next = n;
         }
     }
-    
+
     private Node front;
     private Node back;
 
     public LLQueue() {
-     // to do
+        front = null;
+        back = null;
     }
-    
-    //offer(enqueue) adds the object at the back of the queue
+
+    // offer(enqueue) adds the object at the back of the queue
     public void offer(Object o) {
-     // to do
+        Node newNode = new Node(o, null);
+        if (isEmpty()) {
+            front = newNode;
+            back = newNode;
+        } else {
+            back.next = newNode;
+            back = newNode;
+        }
     }
-    
-    //poll(dequeue): retrieves and removes the head of this queue, 
-    //or returns null if this queue is empty.
+
+    // poll(dequeue): retrieves and removes the head of this queue,
+    // or returns null if this queue is empty.
     public Object poll() {
-     // to do
+        if (isEmpty()) {
+            return null;
+        } else {
+            Object removedData = front.data;
+            front = front.next;
+            if (front == null) {
+                back = null;
+            }
+            return removedData;
+        }
     }
-    
+
     // Returns the size of linked list by traversing the list
     public int size() {
-        // to do
+        int count = 0;
+        Node current = front;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
     }
-    //peek: Retrieves, but does not remove, the head of this queue, 
-    //or returns null if this queue is empty.
+
+    // peek: Retrieves, but does not remove, the head of this queue,
+    // or returns null if this queue is empty.
     public Object peek() {
-        // to do
-    } 
-    
-    //
+        if (isEmpty()) {
+            return null;
+        } else {
+            return front.data;
+        }
+    }
+
     public boolean isEmpty() {
-        // to do
-    } 
-    
+        return front == null;
+    }
+
     // For two lists to be equal they must contain the same data items in
     // the same order. The equals method of T is used to compare data items.
     public boolean equals(Object otherObject) {
